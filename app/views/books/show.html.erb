@@ -43,7 +43,29 @@
 					<td><%= link_to book_favorite_path(@book), method: :post do %><i class="fa fa-heart" aria-hidden="true" style="color: black;"></i><%= @book.favorites.count %></td><% end %>
 					<% end %>
 				</tr>
-			</table>
+		</table>
+
+		<table class="comment_field">
+			<% @book.post_comments.each do |comment| %>
+				<tr>
+					<td><%= attachment_image_tag(comment.user, :profile_image, :fill, 100, 100, fallback: "no-image-mini.jpg") %><br><%= comment.user.name %></td>
+					<td><%= comment.comment %></td>
+					<% if comment.user == current_user %>
+					<td class="destroy"><%= link_to "Destroy", book_post_comment_path(comment.book, comment), method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{@book.id}" %></td>
+					<% end %>
+			</tr>
+			<% end %>
+		</table>
+
+		<div class="post_comment">
+			<%= form_with(model:[@book, @post_comment], local: true) do |f| %>
+				<div class="field row">
+				<%= f.text_area :comment, class: "col-xs-9" %>
+				<%= f.submit "送信" %>
+				</div>
+			<% end %>
+		</div>
+
 
 	</div>
 </div>
