@@ -17,26 +17,10 @@
 					<td><%= user.name %></td>
 					<td>フォロー数：<%= user.following.count %></td>
 					<td>フォロワー数：<%= user.followers.count %></td>
-					<% unless current_user == user %>
-					  <% if current_user.following?(user) %>
-					  	<%= form_with(model: current_user.active_relationships.find_by(followed_id: user.id), html: { method: :delete }, local: true) do |f| %>
-					      <td><%= f.submit 'フォローを外す', class: 'btn btn-danger btn-block' %></td>
-					  	<% end %>
-					  <% else %>
-					    <%= form_with(model: current_user.active_relationships.build, local: true) do |f| %>
-					      <td><div><%= hidden_field_tag :followed_id, user.id %></div>
-					      <%= f.submit 'フォローする', class: 'btn btn-primary btn-block' %></td>
-					    <% end %>
-					  <% end %>
-					  <% else %>
-					  <td></td>
-					<% end %>
 					<td><%= link_to "Show", user_path(user), class: "user_#{user.id}" %></td>
 				</tr>
 				<% end %>
 			</tbody>
 		</table>
-
     <% end %>
   </div>
-</div>
