@@ -1,0 +1,9 @@
+			<% book.post_comments.each do |comment| %>
+			<tr>
+				<td><%= attachment_image_tag(comment.user, :profile_image, :fill, 100, 100, fallback: "no-image-mini.jpg") %><br><%= comment.user.name %></td>
+				<td><%= comment.comment %></td>
+				<% if comment.user == current_user %>
+				<td class="destroy"><%= link_to "Destroy", book_post_comment_path(comment.book_id, comment.id), method: :delete, data: {confirm: "本当に削除してもよろしいですか？"}, class: "btn-sm btn-danger destroy_book_#{book.id}", remote: true %></td>
+				<% end %>
+			</tr>
+			<% end %>
